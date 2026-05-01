@@ -30,7 +30,7 @@ var app = builder.Build();
 
 app.UseMiddleware<PortalHeaderMiddleware>();
 
-app.MapGet("/", () => Results.Text(@"Y
+app.MapGet("/", () => Results.Text(@"
     <h1>CampusHub.ConfigCenter</h1>
     <ul>
         <li><a href='/config/raw'>/config/raw</a></li>
@@ -57,8 +57,6 @@ app.MapGet("/config/section/portal", (IConfiguration config) =>
 
 app.MapGet("/config/tree", (IConfiguration config, string? section) =>
 {
-    var targetSection = string.IsNullOrEmpty(section) ? (IConfiguration)config : config.GetSection(section);
-    
     object BuildTree(IConfiguration current)
     {
         var children = current.GetChildren().ToList();
@@ -71,8 +69,20 @@ app.MapGet("/config/tree", (IConfiguration config, string? section) =>
         }
         return dict;
     }
-
-    return BuildTree(targetSection);
+    
+    if (!string.IsNullOrEmpty(section))
+    {
+        return BuildTree(config.GetSection(section));
+    }
+    
+    return new
+    {
+        Portal = BuildTree(config.GetSection("Portal")),
+        ConnectionStrings = BuildTree(config.GetSection("ConnectionStrings")),
+        Notifications = BuildTree(config.GetSection("Notifications")),
+        CustomSetting = BuildTree(config.GetSection("CustomSetting")),
+        FeatureFlags = BuildTree(config.GetSection("FeatureFlags"))
+    };
 });
 
 app.MapGet("/config/connection", (IConfiguration config) => 
