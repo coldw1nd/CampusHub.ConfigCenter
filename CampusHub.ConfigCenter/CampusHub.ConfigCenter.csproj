@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="11.0.0-preview.3.26207.106" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="11.0.0-preview.3.26207.106" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="11.0.0-preview.3.26207.106" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="portal.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="notifications.ini">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="customsettings.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

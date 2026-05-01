@@ -1,0 +1,4 @@
+CustomSetting:Message
+Hello from Custom Provider!
+CustomSetting:Version
+1.0.0
